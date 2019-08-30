@@ -1,0 +1,218 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Tutorial · Newton</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="This covers a basic tutorial to get a simple app up and running with Newton Web (Newton)."/><meta name="docsearch:language" content="en"/><meta property="og:title" content="Tutorial · Newton"/><meta property="og:type" content="website"/><meta property="og:url" content="https://newton-web.github.io/docs/"/><meta property="og:description" content="This covers a basic tutorial to get a simple app up and running with Newton Web (Newton)."/><meta property="og:image" content="https://newton-web.github.io/docs/img/undraw_online.svg"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="https://newton-web.github.io/docs/img/undraw_tweetstorm.svg"/><link rel="shortcut icon" href="/docs/img/brainwhite.png"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css"/><link rel="alternate" type="application/atom+xml" href="https://newton-web.github.io/docs/blog/atom.xml" title="Newton Blog ATOM Feed"/><link rel="alternate" type="application/rss+xml" href="https://newton-web.github.io/docs/blog/feed.xml" title="Newton Blog RSS Feed"/><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><script src="/docs/js/scrollSpy.js"></script><link rel="stylesheet" href="/docs/css/main.css"/><script src="/docs/js/codetabs.js"></script></head><body class="sideNavVisible separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/docs/"><img class="logo" src="/docs/img/brainwhite.png" alt="Newton"/><h2 class="headerTitleWithLogo">Newton</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class="siteNavGroupActive"><a href="/docs/docs/GettingStarted" target="_self">Docs</a></li><li class=""><a href="/docs/blog/" target="_self">Blog</a></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><div class="hamburger-menu"><div class="line1"></div><div class="line2"></div><div class="line3"></div></div></div><h2><i>›</i><span>Introduction</span></h2><div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle">Introduction</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/docs/GettingStarted">Getting Started</a></li><li class="navListItem navListItemActive"><a class="navItem" href="/docs/docs/tutorial">Tutorial</a></li><li class="navListItem"><a class="navItem" href="/docs/docs/cli">CLI</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Newton</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/docs/auth">Authentication and Authorization</a></li><li class="navListItem"><a class="navItem" href="/docs/docs/templates">Templates</a></li><li class="navListItem"><a class="navItem" href="/docs/docs/settings">Settings</a></li></ul></div></div></section></div><script>
+            var coll = document.getElementsByClassName('collapsible');
+            var checkActiveCategory = true;
+            for (var i = 0; i < coll.length; i++) {
+              var links = coll[i].nextElementSibling.getElementsByTagName('*');
+              if (checkActiveCategory){
+                for (var j = 0; j < links.length; j++) {
+                  if (links[j].classList.contains('navListItemActive')){
+                    coll[i].nextElementSibling.classList.toggle('hide');
+                    coll[i].childNodes[1].classList.toggle('rotate');
+                    checkActiveCategory = false;
+                    break;
+                  }
+                }
+              }
+
+              coll[i].addEventListener('click', function() {
+                var arrow = this.childNodes[1];
+                arrow.classList.toggle('rotate');
+                var content = this.nextElementSibling;
+                content.classList.toggle('hide');
+              });
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+              createToggler('#navToggler', '#docsNav', 'docsSliderActive');
+              createToggler('#tocToggler', 'body', 'tocActive');
+
+              var headings = document.querySelector('.toc-headings');
+              headings && headings.addEventListener('click', function(event) {
+                var el = event.target;
+                while(el !== headings){
+                  if (el.tagName === 'A') {
+                    document.body.classList.remove('tocActive');
+                    break;
+                  } else{
+                    el = el.parentNode;
+                  }
+                }
+              }, false);
+
+              function createToggler(togglerSelector, targetSelector, className) {
+                var toggler = document.querySelector(togglerSelector);
+                var target = document.querySelector(targetSelector);
+
+                if (!toggler) {
+                  return;
+                }
+
+                toggler.onclick = function(event) {
+                  event.preventDefault();
+
+                  target.classList.toggle(className);
+                };
+              }
+            });
+        </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><h1 class="postHeaderTitle">Tutorial</h1></header><article><div><span><p>This covers a basic tutorial to get a simple app up and running with Newton Web (Newton).
+If you haven't already, see the &quot;Getting Started&quot; section to install the Newton CLI.</p>
+<h2><a class="anchor" aria-hidden="true" id="creating-a-project"></a><a href="#creating-a-project" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Creating a Project</h2>
+<p>Once you have the Newton CLI installed, you can start your new project via:</p>
+<p><code>newton-admin startproject blogTutorial</code></p>
+<p>This will create all of the files you need to start your project.
+Then, change your directory into your project and run <code>npm install</code>.
+For example:</p>
+<pre><code class="hljs css language-bash"><span class="hljs-built_in">cd</span> blogTutorial
+npm install
+</code></pre>
+<p>Once you are ready, you can run <code>nodemon app.js</code> (or whatever you use to automatically restart your Express.js server).</p>
+<p>You should now be able to go to <code>localhost:8000</code> and see your project running!</p>
+<h2><a class="anchor" aria-hidden="true" id="configuring-your-home-route"></a><a href="#configuring-your-home-route" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Configuring your Home Route</h2>
+<p>By default, your route at <code>localhost:8000</code> is configured in <code>blogTutorial/main/routes.js</code>.
+If you change the code in your <code>mainRouter</code>'s first <code>app.get</code> to configure your home route to go wherever you want.
+Change the string in the <code>response.send</code> to &quot;Welcome to my Blog&quot;.
+The <code>mainRouter</code> will take care of all of the routing for your project.</p>
+<h2><a class="anchor" aria-hidden="true" id="creating-an-app"></a><a href="#creating-an-app" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Creating an App</h2>
+<p>The best practice is to create an app for each table you will have in your database.
+Let's create a new app called blogs (we aren't calling it posts due to potential confusion with POST requests). In your terminal, run:</p>
+<p><code>newton-admin startapp blogs</code></p>
+<p>Then, in your <code>main/settings.js</code>, add 'blogs' to your <code>apps</code> array.
+This is necessary for future functionality, such at views and models.</p>
+<p>Let's make it so that we can access routes within your blogs app by using Express router.
+There will be three steps:</p>
+<ol>
+<li>Create a controller in your <code>blogs/controllers.js</code></li>
+<li>Create a route that calls your controller in your <code>blogs/routes.js</code></li>
+<li>Include the <code>blogs/routes.js</code> routes in your <code>main/routes.js</code></li>
+</ol>
+<p>In your <code>blogs/controllers.js</code>, write the following code:</p>
+<pre><code class="hljs css language-javascript"><span class="hljs-built_in">module</span>.exports = {
+    <span class="hljs-attr">index</span>: <span class="hljs-function">(<span class="hljs-params">request, response</span>) =&gt;</span> {
+        response.send(<span class="hljs-string">"Hello World"</span>);
+    }
+}
+</code></pre>
+<p>Then, your <code>blogs/routes.js</code> should look like this:</p>
+<pre><code class="hljs css language-javascript"><span class="hljs-keyword">const</span> router = <span class="hljs-built_in">require</span>(<span class="hljs-string">'express'</span>).Router();
+<span class="hljs-keyword">const</span> blogsController = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./controllers'</span>);
+
+<span class="hljs-comment">//Your routes go here</span>
+router.get(<span class="hljs-string">'/'</span>, blogsController.index);
+
+<span class="hljs-built_in">module</span>.exports = router;
+</code></pre>
+<p>And finally, add the routes to your <code>main/routes.js</code>:</p>
+<pre><code class="hljs css language-javascript"><span class="hljs-keyword">const</span> settings = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./settings'</span>);
+<span class="hljs-keyword">const</span> blogRoutes = <span class="hljs-built_in">require</span>(<span class="hljs-string">'../blogs/routes'</span>);
+
+mainRouter = <span class="hljs-function">(<span class="hljs-params">app</span>) =&gt;</span> {
+    app.get(<span class="hljs-string">'/'</span>, (request, response)=&gt;{
+        response.send(<span class="hljs-string">`Welcome to Newton! You are running your server at <span class="hljs-subst">${settings.port}</span>`</span>);
+    });
+    <span class="hljs-comment">//Put your other routes/routers here</span>
+    app.use(<span class="hljs-string">'/blogs'</span>, blogRoutes);
+}
+
+<span class="hljs-built_in">module</span>.exports = mainRouter;
+
+</code></pre>
+<p>Go to <code>localhost:8000/blogs</code> and you should see &quot;Hello World!&quot;.
+Congratulations! You have just set up your first route.</p>
+<h2><a class="anchor" aria-hidden="true" id="add-a-view-to-your-controller"></a><a href="#add-a-view-to-your-controller" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Add a View to your Controller</h2>
+<p>Within your 'blogs' app, create a 'views/blogs' folder, and a file called 'index.ejs' within the views directory.
+If you plan on having view files with the same names in different apps, you must nest the files in another folder name.</p>
+<p>Within your index.ejs, you can put whatever you want.
+For example:</p>
+<pre><code class="hljs css language-html"><span class="hljs-tag">&lt;<span class="hljs-name">html</span> <span class="hljs-attr">lang</span>=<span class="hljs-string">"en"</span> <span class="hljs-attr">dir</span>=<span class="hljs-string">"ltr"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">"utf-8"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>Hello World!<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span>
+</code></pre>
+<p>Then, in 'blogs/controllers.js', change your response to:</p>
+<pre><code class="hljs css language-javascript"><span class="hljs-built_in">module</span>.exports = {
+    <span class="hljs-attr">index</span>: <span class="hljs-function">(<span class="hljs-params">request, response</span>) =&gt;</span> {
+        response.render(<span class="hljs-string">"blogs/index"</span>);
+    }
+}
+</code></pre>
+<p>Now, we can include html templates in our Newton project.</p>
+<h2><a class="anchor" aria-hidden="true" id="models"></a><a href="#models" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Models</h2>
+<p>Now, let's add models to our project.
+Newton comes ready to go with MongoDB and Mongoose set up.
+By default, Newton will use a MongoDB database with the same name as your project, and you can adjust this in your <code>main/settings.js</code> via the <code>database.databaseURL</code>.
+Make sure you are running MongoDB in the background before beginning this part.</p>
+<p>Next, let's create a simple model for our Blog Post in <code>blogs/models.js</code>;</p>
+<pre><code class="hljs css language-javascript"><span class="hljs-keyword">const</span> mongoose = <span class="hljs-built_in">require</span>(<span class="hljs-string">'mongoose'</span>);
+
+<span class="hljs-keyword">const</span> BlogSchema = <span class="hljs-keyword">new</span> mongoose.Schema({
+    <span class="hljs-attr">title</span>: { <span class="hljs-attr">type</span>:<span class="hljs-built_in">String</span> },
+    <span class="hljs-attr">content</span>: { <span class="hljs-attr">type</span>: <span class="hljs-built_in">String</span> }
+}, {<span class="hljs-attr">timestamp</span>: <span class="hljs-literal">true</span>});
+
+mongoose.model(<span class="hljs-string">'Blog'</span>, BlogSchema);
+</code></pre>
+<p>In the <code>main/db.js</code>, Newton takes care of most of what you need for the collection creation.
+Next, in your controller, let's create a new blog in our index method.
+When we visit our index view, we will create a new blog with the title of &quot;My new Blog&quot; and content of &quot;This is blog content&quot;.
+If you want to manually check it in the command line in your database, you can.
+However, let's create another method in our controller to query our database for all Blogs.
+Our <code>blogs/controllers.js</code> should look like this now:</p>
+<pre><code class="hljs css language-javascript"><span class="hljs-keyword">const</span> mongoose = <span class="hljs-built_in">require</span>(<span class="hljs-string">'mongoose'</span>);
+
+<span class="hljs-built_in">module</span>.exports = {
+    <span class="hljs-attr">index</span>: <span class="hljs-function">(<span class="hljs-params">request, response</span>) =&gt;</span> {
+        <span class="hljs-keyword">const</span> Blog = mongoose.model(<span class="hljs-string">'Blog'</span>);
+        <span class="hljs-keyword">let</span> blog = <span class="hljs-keyword">new</span> Blog();
+        blog.title = <span class="hljs-string">"My new Blog"</span>;
+        blog.content = <span class="hljs-string">"This is blog content"</span>;
+        blog.save();
+        response.render(<span class="hljs-string">"blogs/index"</span>);
+    },
+    <span class="hljs-attr">list</span>: <span class="hljs-function">(<span class="hljs-params">request, response</span>) =&gt;</span> {
+        <span class="hljs-keyword">const</span> Blog = mongoose.model(<span class="hljs-string">'Blog'</span>);
+        Blog.find({}, (err, blogs)=&gt;{
+            <span class="hljs-keyword">if</span>(err){
+                response.json(err);
+            }<span class="hljs-keyword">else</span>{
+                <span class="hljs-keyword">let</span> context = blogs;
+                response.render(<span class="hljs-string">"blogs/list"</span>, {<span class="hljs-attr">blogs</span>: context});
+            }
+        })
+    }
+}
+</code></pre>
+<p>We are using a new view now, <code>list.ejs</code>.
+We will have to create a new file in our blogs/views/blogs called <code>list.ejs</code>, which will contain the following:</p>
+<pre><code class="hljs css language-html">&lt;html lang="en" dir="ltr"&gt;
+    &lt;head&gt;
+        &lt;meta charset="utf-8"&gt;
+        &lt;title&gt;&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;% for(let i = 0; i &lt; blogs.length; i++){%&gt;
+            &lt;p&gt;Title: &lt;%= blogs[i].title %&gt;&lt;/p&gt;
+            &lt;p&gt;Content: &lt;%= blogs[i].content %&gt;&lt;/p&gt;
+        &lt;% } %&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>This will loop through and display all of our blogs (only one so far if you have only visited the index method once).
+Finally, we will need to create a route so that we can display our list controller.
+Our <code>blogs/routes.js</code> will have another route added.</p>
+<pre><code class="hljs css language-javascript"><span class="hljs-keyword">const</span> router = <span class="hljs-built_in">require</span>(<span class="hljs-string">'express'</span>).Router();
+<span class="hljs-keyword">const</span> blogsController = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./controllers'</span>);
+
+<span class="hljs-comment">//Your routes go here</span>
+router.get(<span class="hljs-string">'/'</span>, blogsController.index);
+router.get(<span class="hljs-string">'/list'</span>, blogsController.list);
+
+<span class="hljs-built_in">module</span>.exports = router;
+</code></pre>
+<p>If you visit <code>localhost:8000/blogs/list</code>, you should see your blog(s) that you have created.</p>
+<p>The rest of the functionality, at this point, is really just applying Express.js and Mongoose, o you should refer to their documentation for further questions.</p>
+</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/docs/docs/GettingStarted"><span class="arrow-prev">← </span><span>Getting Started</span></a><a class="docs-next button" href="/docs/docs/cli"><span>CLI</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#creating-a-project">Creating a Project</a></li><li><a href="#configuring-your-home-route">Configuring your Home Route</a></li><li><a href="#creating-an-app">Creating an App</a></li><li><a href="#add-a-view-to-your-controller">Add a View to your Controller</a></li><li><a href="#models">Models</a></li></ul></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><a href="/docs/" class="nav-home"><img src="/docs/img/brainwhite.png" alt="Newton" width="66" height="58"/></a><div><h5>Docs</h5><a href="/docs/GettingStarted">Getting Started (or other categories)</a></div><div><h5>More</h5><a href="/docs/blog">Blog</a><a href="https://github.com/newton-web">GitHub</a><a class="github-button" data-icon="octicon-star" data-count-href="/facebook/docusaurus/stargazers" data-show-count="true" data-count-aria-label="# stargazers on GitHub" aria-label="Star this project on GitHub">Star</a></div></section><section class="copyright">Copyright © 2019 Newton Web</section></footer></div></body></html>
