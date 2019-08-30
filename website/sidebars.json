@@ -1,0 +1,10 @@
+{
+  "docs": {
+    "Introduction": ["Getting Started", "cli", "tutorial"],
+    "Newton": ["Auth", "Templates", "Settings"]
+  },
+  "docs-other": {
+    "Introduction": ["GettingStarted", "tutorial", "cli"],
+    "Newton": ["auth", "templates", "settings"]
+  }
+}
