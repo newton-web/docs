@@ -15,7 +15,6 @@ const users = [
     // You will need to prepend the image path with your baseUrl
     // if it is not '/', like: '/test-site/img/image.jpg'.
     image: '/img/undraw_open_source.svg',
-    infoLink: 'https://www.facebook.com',
     pinned: true,
   },
 ];
@@ -28,7 +27,7 @@ const siteConfig = {
   // For github.io type URLs, you would set the url and baseUrl like:
   //   url: 'https://facebook.github.io',
   //   baseUrl: '/test-site/',
-
+  docsUrl: '',
   // Used for publishing and more
   projectName: 'docs',
   organizationName: 'newton-web',
